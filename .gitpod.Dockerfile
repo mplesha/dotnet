@@ -5,14 +5,16 @@ USER root
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
     && apt-get install -y git curl sudo locales zip unzip \
-    && curl -O https://download.visualstudio.microsoft.com/download/pr/9f071c35-36b4-48c9-bcc2-b381ecb6cada/5be4784f19c28cb58f8c79219347201a/dotnet-sdk-3.0.100-preview-009812-linux-x64.tar.gz \
-    && mkdir -p /var/local/dotnet && tar zxf dotnet-sdk-3.0.100-preview-009812-linux-x64.tar.gz -C /var/local/dotnet \
+    && curl -O https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb \
+    && dpkg -i packages-microsoft-prod.deb \
+    && apt-get update \
+    && apt-get install apt-transport-https \
+    && apt-get update \
+    && apt-get install dotnet-sdk-3.1 \
     && apt-get clean && rm -rf dotnet* /var/lib/apt/lists/* /tmp/* \
     && locale-gen en_US.UTF-8
 
 ENV LANG=en_US.UTF-8
-ENV DOTNET_ROOT=/var/local/dotnet
-ENV PATH=$PATH:/var/local/dotnet
 
 RUN useradd -l -u 33333 -G sudo -md /home/gitpod -s /bin/bash -p gitpod gitpod \
     # passwordless sudo for users in the 'sudo' group
