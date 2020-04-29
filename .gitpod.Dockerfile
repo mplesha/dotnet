@@ -1,22 +1,17 @@
-FROM ubuntu:latest
+FROM ubuntu:eoan
 
 USER root
 
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
-    && apt-get install -y git curl sudo locales zip unzip gpg \
-    && curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o microsoft.asc.gpg \
-    && mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/ \
-    && curl -O https://packages.microsoft.com/config/ubuntu/20.04/prod.list \
-    && mv prod.list /etc/apt/sources.list.d/microsoft-prod.list \
-    && chown root:root /etc/apt/trusted.gpg.d/microsoft.asc.gpg \
-    && chown root:root /etc/apt/sources.list.d/microsoft-prod.list \
+    && apt-get install -y git curl sudo locales zip unzip \
+    && curl -O https://packages.microsoft.com/config/ubuntu/19.10/packages-microsoft-prod.deb \
+    && dpkg -i packages-microsoft-prod.deb \
     && apt-get update \
     && apt-get install -y apt-transport-https \
     && apt-get update \
-    && apt search dotnet-sdk \
-    && apt install -y dotnet-sdk-3.1 \
-    && apt-get clean && rm -rf ./* /var/lib/apt/lists/* /tmp/* \
+    && apt-get install -y dotnet-sdk-3.1 \
+    && apt-get clean && rm -rf packages* /var/lib/apt/lists/* /tmp/* \
     && locale-gen en_US.UTF-8
 
 ENV LANG=en_US.UTF-8
