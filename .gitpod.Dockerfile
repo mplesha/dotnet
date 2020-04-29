@@ -8,10 +8,10 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && curl -O https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb \
     && apt-get update \
-    && apt-get install apt-transport-https \
+    && apt-get install -y apt-transport-https \
     && apt-get update \
-    && apt-get install dotnet-sdk-3.1 \
-    && apt-get clean && rm -rf dotnet* /var/lib/apt/lists/* /tmp/* \
+    && apt-get install -y dotnet-sdk-3.1 \
+    && apt-get clean && rm -rf packages* /var/lib/apt/lists/* /tmp/* \
     && locale-gen en_US.UTF-8
 
 ENV LANG=en_US.UTF-8
