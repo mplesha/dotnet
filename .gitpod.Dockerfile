@@ -10,7 +10,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
     && apt-get install -y apt-transport-https \
     && apt-get update \
-    && apt-get install -y {the .NET Core package} \
+    && dpkg --purge packages-microsoft-prod \
+    && dpkg -i packages-microsoft-prod.deb \
+    && apt-get install -y dotnet-sdk-3.1 \
     && apt-get clean && rm -rf packages* /var/lib/apt/lists/* /tmp/* \
     && locale-gen en_US.UTF-8
 
