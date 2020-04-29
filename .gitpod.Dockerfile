@@ -14,8 +14,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
     && apt-get install -y apt-transport-https \
     && apt-get update \
-    && apt-get search dotnet-sdk \
-    && apt-get install -y dotnet-sdk-3.1 \
+    && apt search dotnet-sdk \
+    && apt install -y dotnet-sdk-3.1 \
     && apt-get clean && rm -rf ./* /var/lib/apt/lists/* /tmp/* \
     && locale-gen en_US.UTF-8
 
